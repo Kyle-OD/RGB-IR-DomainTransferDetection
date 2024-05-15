@@ -14,30 +14,35 @@ Download datasets:
 
 Move to directory `./data`
 
+### Prepare paired visible-thermal images
+```
+python pytorch-CycleGAN-and-pix2pix/datasets/combine_A_and_B.py --fold_A data/LLVIP/visible/ --fold_B data/LLVIP/infrared/ --foldAB data/LLVIP/visible-infrared/
+```
+
 ## Train VAE for image-image translation
-1) Run the cells in `VAE_transfer.py` 
+1) Run the cells in `VAE_transfer.ipynb` 
 2) More ablations and architecture changes needed
 
 
 ## Training Pix2pix VAE for image-image translation
 ```
-python pytorch-CycleGAN-and-pix2pix/train.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot ./data/LLVIP/visible-infrared/ --name LLVIP2 --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --n_epochs 100 --n_epochs_decay 100 --netG unet_256
+python pytorch-CycleGAN-and-pix2pix/train.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot ./data/LLVIP/visible-infrared/ --name LLVIP --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --n_epochs 100 --n_epochs_decay 100 --netG unet_256
 ```
 
 ## Transfer COCO to Thermal with pix2pix:
 ### Train
 ```
-python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/train2017/ --phase '' --name LLVIP2 --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/train2017/ --num_test 118287
+python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/train2017/ --phase '' --name LLVIP --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/train2017/ --num_test 118287
 ```
 
 ### Validation
 ```
-python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/val2017/ --phase '' --name LLVIP2 --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/val2017/ --num_test 5000
+python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/val2017/ --phase '' --name LLVIP --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/val2017/ --num_test 5000
 ```
 
 ### Test
 ```
-python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/test2017/ --phase '' --name LLVIP2 --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/test2017/ --num_test 40670
+python pytorch-CycleGAN-and-pix2pix/test.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot data/coco/test2017/ --phase '' --name LLVIP --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --netG unet_256 --results_dir data/coco-ir-pix2pix/test2017/ --num_test 40670
 ```
 
 To fix directory structure, run the following:
