@@ -1,13 +1,25 @@
 # RGB-IR-DomainTransferDetection
 
-## Install dependant directories
+## Install Dependencies
+
+This project uses anaconda to manage packages.  To install required libraries, rn the following command from terminal:
+
+```
+conda env create -f environment.yml
+```
+
+Activate this environment with `conda activate rgb-ir`
+
+### Install dependant directories
 Clone the following repos into your parent directory:
-```bash
+```
 git clone https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix.git
 git clone https://github.com/ultralytics/yolov5
 ```
 
-## Datasets 
+Follow steps that each directory required for setup, located in their respective README.md files
+
+### Datasets 
 Download datasets:
 - LLVIP[https://github.com/bupt-ai-cz/LLVIP]: Paired Visible-Thermal image dataset for streetview
 - COCO2017[https://cocodataset.org/#home]: Common Objects in Contect
@@ -28,6 +40,8 @@ python pytorch-CycleGAN-and-pix2pix/datasets/combine_A_and_B.py --fold_A data/LL
 ```
 python pytorch-CycleGAN-and-pix2pix/train.py --checkpoints_dir pytorch-CycleGAN-and-pix2pix/checkpoints/ --dataroot ./data/LLVIP/visible-infrared/ --name LLVIP --model pix2pix --direction AtoB --batch_size 8 --preprocess scale_width_and_crop --load_size 320 --crop_size 256 --gpu_ids 0 --n_epochs 100 --n_epochs_decay 100 --netG unet_256
 ```
+
+To plot the loss of training, use the code located in `plot_p2p_loss.ipynb`
 
 ## Transfer COCO to Thermal with pix2pix:
 ### Train
@@ -61,3 +75,5 @@ Train new model
 cp coco-ir.yaml ./yolov5/data/
 python yolov5/train.py --data coco-ir.yaml --weights yolov5s.pt --imgsz 640 --epochs 30
 ```
+
+Use instructions from `yolov5/README.md` to evaluate new model on translated images
