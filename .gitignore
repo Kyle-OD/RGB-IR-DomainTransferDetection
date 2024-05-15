@@ -1,0 +1,8 @@
+*.JPG
+*.png
+*.pt
+*.pth
+data/*
+wandb/*
+pytorch-CycleGAN-and-pix2pix/*
+yolov5/*
